@@ -1,0 +1,1 @@
+const socket = io('https://taiwanbeats2019.herokuapp.com/');

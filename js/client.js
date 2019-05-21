@@ -1,0 +1,40 @@
+
+
+socket.on('connect', () => {
+
+    console.log("connect");
+    if(UUID == null) {
+        UUID = generate_uuid()
+        console.log(UUID)
+        localStorage.setItem("uuid", UUID);
+    }
+
+    socket.on('broadcast', (data) => {
+        if (data.uuid == UUID) return;
+    });
+    
+})
+
+socket.on('disconnect', function () {
+    console.log('user disconnected');
+});
+
+
+window.addEventListener('beforeunload', function (e) {
+    socket.emit('disconnected',{
+        uuid: UUID
+    })
+});
+
+
+function generate_uuid() {
+    var d = Date.now();
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+        d += performance.now(); //use high-precision timer if available
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}

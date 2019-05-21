@@ -1,0 +1,23 @@
+{
+  "name": "taiwanbeats2019",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZONESOUND/TaiwanBeats2019.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZONESOUND/TaiwanBeats2019/issues"
+  },
+  "homepage": "https://github.com/ZONESOUND/TaiwanBeats2019#readme",
+  "dependencies": {
+    "socket.io": "2.2.0"
+  }
+}
