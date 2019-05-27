@@ -3,7 +3,8 @@ setup()
 
 
 
-let bgTexture, bgSprite, bgVideoSource, effectTexture, effectVideoSource
+let bgTexture, bgSprite, bgVideoSource
+let effectTexture = [], effectVideoSource = []
 let catSprite
 let profileContainer = new Container()
 let profileTexture = []
@@ -11,8 +12,9 @@ let buttonGraphic  = []
 
 
 
-loader.add('./video/LuckyCat.mp4')
-      .add('./video/BendedText.mp4')
+loader.add('catVideo','./video/LuckyCat.mp4')
+      .add('logoVideo_1','./video/BendedText.mp4')
+      .add('logoVideo_2', './video/LogoRotate.mp4')
       .add('callico','./image/callico.jpg')
       .add('bird','./image/bird.jpg')
       .add('desert', './image/DesertTrance.jpeg')
@@ -24,36 +26,43 @@ loader.add('./video/LuckyCat.mp4')
 function videosetup() {
 
     bgTexture = Texture.from('./video/LuckyCat.mp4');
-    effectTexture = Texture.from('./video/BendedText.mp4');
+
+    effectTexture.push(Texture.from('./video/LogoRotate.mp4'))
+    effectTexture.push(Texture.from('./video/BendedText.mp4'))
+    
+
+
     bgSprite = new PIXI.Sprite(bgTexture);
     bgSprite.width  = vw
     bgSprite.height = vh
     bgSprite.anchor.set(0.5, 0.5);
-    console.log(vw, vh)
-    bgVideoSource = bgTexture.baseTexture.source
-    bgVideoSource.paused = true
-    bgVideoSource.autoplay = false
-    bgVideoSource.loop = true
-    console.log(bgVideoSource.autoplay)
-    
-    effectVideoSource = effectTexture.baseTexture.source
-    effectVideoSource.paused = true
-    effectVideoSource.autoplay = false
-    effectVideoSource.loop = true
 
+
+    bgVideoSource = bgTexture.baseTexture.source
+    bgVideoSource.autoplay = true
+    bgVideoSource.loop = true
+
+    effectTexture.forEach(function(e, i) {
+        console.log(i)
+        effectVideoSource[i] = e.baseTexture.source
+        effectVideoSource[i].autoplay = true
+        effectVideoSource[i].loop = true
+
+    })
+    
     stage.addChild(bgSprite);
+
     soundsetup()
     createGraphic()
     profileSetup()
 
-   
 }
 
 
 window.addEventListener('keypress', (event) => {
     sound.restart()
     if (bgSprite.texture == bgTexture) {
-        bgSprite.texture = effectTexture
+        bgSprite.texture = effectTexture[Math.floor(Math.random() * 2)]
     } else {
         bgSprite.texture = bgTexture
     }
@@ -73,7 +82,7 @@ function profileSetup() {
     profileTexture[0] = resources['bird'].texture
     profileTexture[1] = resources['callico'].texture
 
-    for(var i=0; i< 1000;i++) {
+    for(var i=0; i< 1000; i++) {
         let index = Math.floor(Math.random() * 2)
         let px = Math.random() * vw - (vw / 2)
         let py = Math.random() * vh - (vh / 2)
@@ -105,7 +114,6 @@ function createProfile() {
 
 
 
-
 function createImage() {
 
     catSprite = new Sprite.from('./image/cat.png')
@@ -124,6 +132,7 @@ function createImage() {
     TweenMax.to(catSprite, 1, {
         pixi: {
             x: 0,
+            y: 0,
             alpha: 0
         },
         yoyo: true
@@ -155,13 +164,10 @@ function createGraphic() {
         buttonGraphic[i].id = i
 
         buttonGraphic[i].on('pointerdown', function() {
+            console.log('down')
             if(this.id == 0) {
                 sound.restart()
-                if (bgSprite.texture == bgTexture) {
-                    bgSprite.texture = effectTexture
-                } else {
-                    bgSprite.texture = bgTexture
-                }
+                changeBG()
             } else if(this.id == 1) {
                 catsound.start()
                 createImage()
@@ -178,6 +184,13 @@ function createGraphic() {
 
             t.play()
         })
+
+        buttonGraphic[i].on('pointerup', function () {
+            if(this.id == 0) {
+                bgSprite.texture = bgTexture
+            }
+        })
+        
         
         stage.addChild(buttonGraphic[i])
 
@@ -189,3 +202,11 @@ function soundsetup() {
     player.loop = true
 }
 
+function changeBG() {
+    if (bgSprite.texture == bgTexture) {
+        bgSprite.texture = effectTexture[0]
+        console.log(effectTexture)
+    } else {
+        bgSprite.texture = bgTexture
+    }
+}
