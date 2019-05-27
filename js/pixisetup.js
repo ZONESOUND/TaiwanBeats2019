@@ -10,14 +10,23 @@ const app = new PIXI.Application({
     autoResize: true,
     forceCanvas: true,
     resolution: devicePixelRatio,
+    antialias: true
 });
 
 let renderer = app.renderer,
     stage = app.stage,
     view = app.view,
-    loader = app.loader,
+    // loader = app.loader,
     vw = window.innerWidth,
     vh = window.innerHeight
+
+let loader = PIXI.Loader.shared
+let resources = PIXI.Loader.shared.resources
+let Graphics  = PIXI.Graphics
+let Sprite = PIXI.Sprite
+let solid = PIXI.Texture.WHITE
+let player = new Tone.Player('./sound/background.wav').toMaster()
+let sound = new Tone.Player('./sound/calico.wav').toMaster()
 
 
 window.onresize = resize
@@ -28,8 +37,8 @@ function resize() {
     let h = window.innerHeight;
 
     renderer.resize(w, h);
-    stage.x = renderer.width * 0.5;
-    stage.y = renderer.height * 0.5;
+    stage.x = vw/2
+    stage.y = vh/2
 }
 
 
