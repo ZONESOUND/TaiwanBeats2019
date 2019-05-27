@@ -139,7 +139,12 @@ function createImage() {
     });
 
     setTimeout(function() {
-        catSprite.destroy()
+        try {
+            catSprite.destroy()
+        } catch(e) {
+            console.log(e)
+        }
+        
     },1000)
 
     
