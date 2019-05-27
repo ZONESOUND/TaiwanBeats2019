@@ -4,18 +4,24 @@ setup()
 
 
 let bgTexture, bgSprite, bgVideoSource, effectTexture, effectVideoSource
-let buttonGraphic = []
+let catSprite
+let profileContainer = new Container()
+let profileTexture = []
+let buttonGraphic  = []
 
 loader.add('./video/LuckyCat.mp4')
       .add('./video/BendedText.mp4')
+      .add('callico','./image/callico.jpg')
+      .add('bird','./image/bird.jpg')
       .load(videosetup);
 
 
 function videosetup() {
 
+    bgTexture = Texture.from('./video/LuckyCat.mp4');
+    effectTexture = Texture.from('./video/BendedText.mp4');
 
-    bgTexture = PIXI.Texture.from('./video/LuckyCat.mp4');
-    effectTexture = PIXI.Texture.from('./video/BendedText.mp4');
+
     
     bgSprite = new PIXI.Sprite(bgTexture);
     bgSprite.width  = vw
@@ -36,8 +42,11 @@ function videosetup() {
     stage.addChild(bgSprite);
     soundsetup()
     createGraphic()
+    profileSetup()
+
    
 }
+
 
 window.addEventListener('keypress', (event) => {
     sound.restart()
@@ -57,11 +66,83 @@ window.addEventListener('keyup', (event) => {
 })
 
 
+function profileSetup() {
+
+    profileTexture[0] = resources['bird'].texture
+    profileTexture[1] = resources['callico'].texture
+
+    for(var i=0; i< 1000;i++) {
+        let index = Math.floor(Math.random() * 2)
+        let px = Math.random() * vw - (vw / 2)
+        let py = Math.random() * vh - (vh / 2)
+        let profile = new Sprite(profileTexture[index])
+        profile.scale.set(0.15, 0.15)
+        profile.position.set(px, py)
+        profileContainer.addChild(profile)
+    }
+}
+
+
+function createProfile() {
+    console.log(profileContainer)
+    let nowContainer = profileContainer
+    nowContainer.alpha = 1
+    stage.addChild(nowContainer)
+    TweenMax.to(nowContainer, 1, {
+        pixi: {
+            alpha: 0
+        },
+        yoyo: true,
+        ease: Elastic.easeOut.config(1, 0.2)
+    })
+    setTimeout(() => {
+        stage.removeChild(nowContainer)
+        
+    }, 1000);
+}
+
+
+
+
+function createImage() {
+
+    catSprite = new Sprite.from('./image/cat.png')
+    catSprite.anchor.set(0.5, 0.5)
+    catSprite.scale.set(0.3, 0.3)
+
+    let cx = Math.random() * vw - (vw / 2)
+    let cy = Math.random() * vh - (vh / 2)
+
+    catSprite.position.set(cx, cy)
+
+
+
+    
+    stage.addChild(catSprite)
+    TweenMax.to(catSprite, 1, {
+        pixi: {
+            x: 0,
+            alpha: 0
+        },
+        yoyo: true
+    });
+
+    setTimeout(function() {
+        catSprite.destroy()
+    },1000)
+
+    
+
+}   
+
+
 
 function createGraphic() {
     for(var i = 0; i < 4; i++) {
+
         let bw = vw / 2
         let bh = vh / 2
+        
         buttonGraphic[i] = new Sprite(solid)
         buttonGraphic[i].width  = bw
         buttonGraphic[i].height = bh;
@@ -70,43 +151,33 @@ function createGraphic() {
         buttonGraphic[i].alpha = 0
         buttonGraphic[i].position.set((i % 2) * bw - bw, Math.floor(i / 2) * bh - bh);
         buttonGraphic[i].id = i
+
         buttonGraphic[i].on('pointerdown', function() {
             if(this.id == 0) {
-            sound.restart()
-            if (bgSprite.texture == bgTexture) {
-                bgSprite.texture = effectTexture
-            } else {
-                bgSprite.texture = bgTexture
+                sound.restart()
+                if (bgSprite.texture == bgTexture) {
+                    bgSprite.texture = effectTexture
+                } else {
+                    bgSprite.texture = bgTexture
+                }
+            } else if(this.id == 1) {
+                catsound.start()
+                createImage()
+            } else if(this.id == 2) {
+
+            } else if(this.id == 3) {
+                crashsound.restart()
+                createProfile()
             }
-        }
         
             let t = new TimelineMax()
             t.to(this, 0, {alpha: 0.4})
             .to(this, 0, {alpha: 0}, "+=0.1")
+
             t.play()
-
-
         })
         stage.addChild(buttonGraphic[i])
 
-
-        // buttonGraphic[i] = new Graphics()
-        // buttonGraphic[i].beginFill(0x000ff0)
-        // buttonGraphic[i].drawRect( (i%2)*bw - bw, Math.floor(i/2)*bh-bh, bw, bh)
-        // buttonGraphic[i].endFill()
-        // buttonGraphic[i].interactive = true
-        // buttonGraphic[i].zOrder = -10
-        // buttonGraphic[i].on('pointerdown', function() {
-        //     TweenMax.to(this, 0.2, {
-        //         pixi: {
-        //             colorize: 'red',
-        //             autoalpha: 1
-        //         },
-        //         yoyo: true,
-        //         repeat: 1
-        //     });
-        // })
-        // stage.addChild(buttonGraphic[i])
     }
 }
 

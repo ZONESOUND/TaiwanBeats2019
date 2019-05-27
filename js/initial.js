@@ -18,6 +18,7 @@ function initial() {
 
     bodyScrollLock.disableBodyScroll(window);
     disableZoom()
+    // openFullscreen()
 }
 
 
