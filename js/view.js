@@ -9,20 +9,22 @@ let profileContainer = new Container()
 let profileTexture = []
 let buttonGraphic  = []
 
+
+
 loader.add('./video/LuckyCat.mp4')
       .add('./video/BendedText.mp4')
       .add('callico','./image/callico.jpg')
       .add('bird','./image/bird.jpg')
+      .add('desert', './image/DesertTrance.jpeg')
       .load(videosetup);
+
+
 
 
 function videosetup() {
 
     bgTexture = Texture.from('./video/LuckyCat.mp4');
     effectTexture = Texture.from('./video/BendedText.mp4');
-
-
-    
     bgSprite = new PIXI.Sprite(bgTexture);
     bgSprite.width  = vw
     bgSprite.height = vh
@@ -164,18 +166,19 @@ function createGraphic() {
                 catsound.start()
                 createImage()
             } else if(this.id == 2) {
-
+                bubble()
             } else if(this.id == 3) {
                 crashsound.restart()
                 createProfile()
             }
-        
+    
             let t = new TimelineMax()
             t.to(this, 0, {alpha: 0.4})
             .to(this, 0, {alpha: 0}, "+=0.1")
 
             t.play()
         })
+        
         stage.addChild(buttonGraphic[i])
 
     }
