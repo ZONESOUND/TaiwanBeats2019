@@ -6,13 +6,16 @@ setup()
 let bgTexture, bgSprite, bgVideoSource, effectTexture, effectVideoSource
 let buttonGraphic = []
 
+
+
 loader.add('./video/LuckyCat.mp4')
       .add('./video/BendedText.mp4')
+      .add('desert', './image/DesertTrance.jpeg')
       .load(videosetup);
 
 
-function videosetup() {
 
+function videosetup() {
 
     bgTexture = PIXI.Texture.from('./video/LuckyCat.mp4');
     effectTexture = PIXI.Texture.from('./video/BendedText.mp4');
@@ -78,6 +81,9 @@ function createGraphic() {
             } else {
                 bgSprite.texture = bgTexture
             }
+        }
+        if (this.id == 2) {
+            bubble();
         }
         
             let t = new TimelineMax()
