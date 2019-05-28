@@ -3,59 +3,45 @@ setup()
 
 
 
-let bgTexture, bgSprite, bgVideoSource
 let effectTexture = [], effectVideoSource = []
 let catSprite
 let profileContainer = new Container()
 let profileTexture = []
 let buttonGraphic  = []
+let bgInterval
 
 
-
-loader.add('catVideo','./video/LuckyCat.mp4')
-      .add('logoVideo_1','./video/BendedText.mp4')
-      .add('logoVideo_2', './video/LogoRotate.mp4')
+loader.add('./video/BendedText.mp4')
+      .add('./video/LogoRotate.mp4')
       .add('callico','./image/callico.jpg')
       .add('bird','./image/bird.jpg')
       .add('desert', './image/DesertTrance.jpeg')
-      .load(videosetup);
+      .load(setupView);
 
 
 
 
-function videosetup() {
+function setupView() {
+    effectVideoSetup()
+    profileSetup()
+    buttonSetup()
+    soundSetup()
+    
+}
 
-    bgTexture = Texture.from('./video/LuckyCat.mp4');
+
+function effectVideoSetup() {
 
     effectTexture.push(Texture.from('./video/LogoRotate.mp4'))
     effectTexture.push(Texture.from('./video/BendedText.mp4'))
     
 
-
-    bgSprite = new PIXI.Sprite(bgTexture);
-    bgSprite.width  = vw
-    bgSprite.height = vh
-    bgSprite.anchor.set(0.5, 0.5);
-
-
-    bgVideoSource = bgTexture.baseTexture.source
-    bgVideoSource.autoplay = true
-    bgVideoSource.loop = true
-
     effectTexture.forEach(function(e, i) {
-        console.log(i)
         effectVideoSource[i] = e.baseTexture.source
         effectVideoSource[i].autoplay = true
         effectVideoSource[i].loop = true
 
     })
-    
-    stage.addChild(bgSprite);
-
-    soundsetup()
-    createGraphic()
-    profileSetup()
-
 }
 
 
@@ -82,7 +68,7 @@ function profileSetup() {
     profileTexture[0] = resources['bird'].texture
     profileTexture[1] = resources['callico'].texture
 
-    for(var i=0; i< 1000; i++) {
+    for(var i=0; i< 150; i++) {
         let index = Math.floor(Math.random() * 2)
         let px = Math.random() * vw - (vw / 2)
         let py = Math.random() * vh - (vh / 2)
@@ -94,66 +80,13 @@ function profileSetup() {
 }
 
 
-function createProfile() {
-    console.log(profileContainer)
-    let nowContainer = profileContainer
-    nowContainer.alpha = 1
-    stage.addChild(nowContainer)
-    TweenMax.to(nowContainer, 1, {
-        pixi: {
-            alpha: 0
-        },
-        yoyo: true,
-        ease: Elastic.easeOut.config(1, 0.2)
-    })
-    setTimeout(() => {
-        stage.removeChild(nowContainer)
-        
-    }, 1000);
+function soundSetup() {
+    player.start()
+    player.loop = true
 }
 
 
-
-function createImage() {
-
-    catSprite = new Sprite.from('./image/cat.png')
-    catSprite.anchor.set(0.5, 0.5)
-    catSprite.scale.set(0.3, 0.3)
-
-    let cx = Math.random() * vw - (vw / 2)
-    let cy = Math.random() * vh - (vh / 2)
-
-    catSprite.position.set(cx, cy)
-
-
-
-    
-    stage.addChild(catSprite)
-    TweenMax.to(catSprite, 1, {
-        pixi: {
-            x: 0,
-            y: 0,
-            alpha: 0
-        },
-        yoyo: true
-    });
-
-    setTimeout(function() {
-        try {
-            catSprite.destroy()
-        } catch(e) {
-            console.log(e)
-        }
-        
-    },1000)
-
-    
-
-}   
-
-
-
-function createGraphic() {
+function buttonSetup() {
     for(var i = 0; i < 4; i++) {
 
         let bw = vw / 2
@@ -169,32 +102,39 @@ function createGraphic() {
         buttonGraphic[i].id = i
 
         buttonGraphic[i].on('pointerdown', function() {
-            console.log('down')
             if(this.id == 0) {
+                buttonShine(this)
                 sound.restart()
                 changeBG()
+                bgInterval = setInterval(() => {
+                    buttonShine(this)
+                    sound.restart()
+                    changeBG()
+                }, 300);
+                
             } else if(this.id == 1) {
+                clearInterval(bgInterval)
                 catsound.start()
                 createImage()
             } else if(this.id == 2) {
+                clearInterval(bgInterval)
                 bubble()
             } else if(this.id == 3) {
+                clearInterval(bgInterval)
                 crashsound.restart()
                 createProfile()
             }
-    
-            let t = new TimelineMax()
-            t.to(this, 0, {alpha: 0.4})
-            .to(this, 0, {alpha: 0}, "+=0.1")
+            buttonShine(this)
 
-            t.play()
         })
 
         buttonGraphic[i].on('pointerup', function () {
             if(this.id == 0) {
+                clearInterval(bgInterval)
                 bgSprite.texture = bgTexture
             }
         })
+        
         
         
         stage.addChild(buttonGraphic[i])
@@ -202,10 +142,14 @@ function createGraphic() {
     }
 }
 
-function soundsetup() {
-    player.start()
-    player.loop = true
+
+function buttonShine(btn) {
+    let t = new TimelineMax()
+    t.to(btn, 0, {alpha: 0.4})
+    .to(btn, 0, {alpha: 0}, "+=0.1")
+    t.play()
 }
+
 
 function changeBG() {
     if (bgSprite.texture == bgTexture) {
@@ -214,4 +158,59 @@ function changeBG() {
     } else {
         bgSprite.texture = bgTexture
     }
+}
+
+function createProfile() {
+    console.log(profileContainer)
+    let nowContainer = profileContainer
+    nowContainer.alpha = 1
+    stage.addChild(nowContainer)
+    TweenMax.to(nowContainer, 1, {
+        pixi: {
+            alpha: 0
+        },
+        yoyo: true,
+        // ease: Elastic.easeOut.config(1, 0.2)
+    })
+    setTimeout(() => {
+        stage.removeChild(nowContainer)
+    }, 1000);
+}
+
+
+function createImage() {
+
+    catSprite = new Sprite.from('./image/cat.png')
+    catSprite.anchor.set(0.5, 0.5)
+    catSprite.scale.set(0.3, 0.3)
+
+    let cx = Math.random() * vw - (vw / 2)
+    let cy = Math.random() * vh - (vh / 2)
+
+    catSprite.position.set(cx, cy)
+
+
+
+
+    stage.addChild(catSprite)
+    TweenMax.to(catSprite, 1, {
+        pixi: {
+            x: 0,
+            y: 0,
+            alpha: 0
+        },
+        yoyo: true
+    });
+
+    setTimeout(function () {
+        try {
+            catSprite.destroy()
+        } catch (e) {
+            console.log(e)
+        }
+
+    }, 1000)
+
+
+
 }
