@@ -4,7 +4,7 @@ setup()
 
 
 let effectTexture = [], effectVideoSource = []
-let catSprite
+//let catSprite
 let profileContainer = new Container()
 let profileTexture = []
 let buttonGraphic  = []
@@ -123,7 +123,7 @@ function buttonSetup() {
                 sound.restart()
                 changeBG()
                 bgInterval = setInterval(() => {
-                    buttonShine(this)
+                    if (this.alpha == 0) buttonShine(this)
                     sound.restart()
                     changeBG()
                 }, 300);
@@ -153,7 +153,7 @@ function buttonSetup() {
             }
             var data = {exec: execStr};
             emit(data);
-            buttonShine(this)
+            if (this.alpha == 0) buttonShine(this)
 
         })
 
@@ -209,7 +209,7 @@ function createProfile() {
 
 function createImage() {
 
-    catSprite = new Sprite.from('./image/cat.png')
+    let catSprite = new Sprite.from('./image/cat.png')
     catSprite.anchor.set(0.5, 0.5)
     catSprite.scale.set(0.3, 0.3)
 
@@ -231,14 +231,14 @@ function createImage() {
         yoyo: true
     });
 
-    setTimeout(function () {
+    setTimeout(function (sprite) {
         try {
-            catSprite.destroy()
+            sprite.destroy()
         } catch (e) {
             console.log(e)
         }
 
-    }, 1000)
+    }, 1000, catSprite)
 
 
 
