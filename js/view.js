@@ -11,15 +11,23 @@ let buttonGraphic  = []
 let bgInterval
 
 
+const gifLoader = new PIXI.loaders.Loader();
+const gifLoadOpt = {
+        loadType: PIXI.loaders.Resource.LOAD_TYPE.XHR,
+        xhrType: PIXI.loaders.Resource.XHR_RESPONSE_TYPE.BUFFER,
+        crossOrigin: ''
+    };
+
 loader.add('./video/BendedText.mp4')
       .add('./video/LogoRotate.mp4')
       .add('callico','./image/callico.jpg')
       .add('bird','./image/bird.jpg')
       .add('desert', './image/DesertTrance.jpeg')
-      .load(setupView);
-
-
-
+      .load(setupView)
+      
+gifLoader.add('./image/birdScream.gif', gifLoadOpt)
+         .add('./image/heartBeat.gif', gifLoadOpt)
+         .load(loadGif);
 
 function setupView() {
     effectVideoSetup()
@@ -102,8 +110,16 @@ function buttonSetup() {
         buttonGraphic[i].id = i
 
         buttonGraphic[i].on('pointerdown', function() {
+            var execStr = "";
             if(this.id == 0) {
-                buttonShine(this)
+                execStr = 
+                `sound.restart();
+                changeBG();
+                setTimeout(() => {
+                    sound.restart()
+                    changeBG()
+                }, 100);
+                `
                 sound.restart()
                 changeBG()
                 bgInterval = setInterval(() => {
@@ -113,17 +129,30 @@ function buttonSetup() {
                 }, 300);
                 
             } else if(this.id == 1) {
+                execStr = 
+                `clearInterval(bgInterval);
+                catsound.start();
+                createImage();`
                 clearInterval(bgInterval)
                 catsound.start()
                 createImage()
             } else if(this.id == 2) {
-                clearInterval(bgInterval)
-                bubble()
+                execStr = 
+                `clearInterval(bgInterval);
+                bubble();`
+                clearInterval(bgInterval);
+                bubble();
             } else if(this.id == 3) {
+                execStr = 
+                `clearInterval(bgInterval);
+                crashsound.restart();
+                createProfile();`
                 clearInterval(bgInterval)
                 crashsound.restart()
                 createProfile()
             }
+            var data = {exec: execStr};
+            emit(data);
             buttonShine(this)
 
         })
