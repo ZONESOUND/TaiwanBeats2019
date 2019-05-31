@@ -52,16 +52,16 @@ function buttonSetup() {
         buttonGraphic[i] = new Sprite(solid)
         buttonGraphic[i].width  = bw
         buttonGraphic[i].height = bh;
-        buttonGraphic[i].tint = color[i];
+        buttonGraphic[i].tint = 0xffffff;
         buttonGraphic[i].interactive = true
         buttonGraphic[i].alpha = 0
         buttonGraphic[i].position.set(xStart, yStart);
         buttonGraphic[i].id = i
 
-        let lineWidth = 4;
+        let lineWidth = 3;
         let gt = new PIXI.Graphics();
         //gt.beginFill(0x123123);
-        gt.lineStyle(lineWidth, color[i]);
+        gt.lineStyle(lineWidth, 0x5a8ee2);
         gt.drawRect(xStart, yStart, bw-lineWidth, bh-lineWidth);﻿
         //gt.endFill();
 
@@ -75,8 +75,9 @@ function buttonSetup() {
             if (this.alpha == 0) buttonShine(this)
 
         })
-        stage.addChild(gt);
+        
         stage.addChild(buttonGraphic[i]);
+        stage.addChild(gt);
     }
 }
 
