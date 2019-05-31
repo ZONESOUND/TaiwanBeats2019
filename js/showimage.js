@@ -64,7 +64,7 @@ let showEmoji = function () {
     let cy = Math.random() * vh - (vh / 2)
 
     text.anchor.set(0.5, 0.5)
-    text.scale.set(1, 1)
+    text.scale.set(4, 4)
     text.position.set(cx, cy)
 
 
@@ -76,7 +76,7 @@ let showEmoji = function () {
             x: 0,
             y: 0,
             alpha: 0,
-            scale: 4
+            scale: 0.2
         },
         yoyo: true
     });

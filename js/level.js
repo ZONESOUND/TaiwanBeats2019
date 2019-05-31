@@ -2,6 +2,7 @@ let bgsound
 
 class Level {
     constructor(soundUrl, videoUrl, trigger, init) {
+
         this.soundUrl = soundUrl
         this.videoUrl = videoUrl
         this.trigger  = trigger
@@ -14,12 +15,13 @@ class Level {
 
     loadBG() {
         if (this.soundUrl) {
-            this.sounds[0] = new Tone.Player(this.soundUrl[0], () => {
+            bgsound = new Tone.Player(this.soundUrl[0], () => {
                 Tone.Transport.start();
+                bgVideoSource.currentTime = 0
             }).toMaster()
-            this.sounds[0].sync().start();
+            bgsound.sync().start();
             console.log(Tone.Transport)
-            this.sounds[0].loop = true  
+            bgsound.loop = true
         } 
         let level_ = this
         console.group(this.videoUrl)
@@ -40,15 +42,15 @@ class Level {
                 bgSprite = tempSprite.sprite
                 bgVideoSource = bgTexture.baseTexture.source
                 
-                bgVideoSource.autoplay = true
+                bgVideoSource.autoplay = false
                 bgVideoSource.loop = true
+                
 
                 stage.addChild(bgSprite)
                 buttonSetup(level_)
             })
         } 
         if(STATE == 0) {
-            console.log('showBG')
             showBGhtml()
             buttonSetup(level_)
             loadingStop()
@@ -65,6 +67,11 @@ class Level {
         if(!this.soundUrl) return
         let sounds = []
         this.soundUrl.forEach(function(url) {
+            
+            if(url == '') {
+                console.log(url)
+                return 
+            }
             let sound = new Tone.Player(url).toMaster()
             sounds.push(sound)
         })
@@ -72,7 +79,7 @@ class Level {
     }
 
     leave() {
-        this.sounds[0].unsync().stop()
+        bgsound.unsync().stop()
         Tone.Transport.stop();
     }
 }
@@ -83,7 +90,7 @@ let levels = []
 
 let trigger_function = [{
     'func': appearLogo,
-    'options': 500
+    'options': 200
 }, {
     'func': showImage,
     'options': null
@@ -160,7 +167,7 @@ trigger_function = [{
 }]
 
 preloadFunction = [preloadGlitchVideo]
-soundUrl = ['./sound/Part4/background.wav', './sound/Part4/freeze.wav', './sound/Part4/robot.wav', './sound/Part4/transformer.wav', './sound/Part4/flash.wav']
+soundUrl = ['./sound/Part4/background.wav', './sound/Part4/freeze.wav', './sound/Part4/robot.wav', './sound/Part4/transformer.wav', '']
 videoUrl = ['./video/Part4/background.mp4']
 levels.push(new Level(soundUrl, videoUrl, trigger_function, preloadFunction))
 
@@ -172,9 +179,13 @@ loadScense(STATE)
 
 
 function changeScense(index) {
+    levels[STATE].leave()
     bgSprite.destroy()
-    if(STATE) {
+    if(STATE == 0) {
         rmBGhtml()
+    }
+    if(STATE == 3) {
+        removeBeam()
     }
     STATE = index
     loadScense(index)

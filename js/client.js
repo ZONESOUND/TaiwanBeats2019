@@ -12,7 +12,14 @@ socket.on('connect', () => {
     socket.on('broadcast', (data) => {
         console.log(data);
         if (data.uuid == UUID) return;
-        eval(data.exec);
+        if(data.state != undefined) {
+            STATE = data.state
+            changeScense(STATE)
+            return
+        }
+        levels[STATE].trigger[data.id].func(levels[STATE].trigger[data.id].options)
+        if (levels[STATE].sounds[data.id + 1] == undefined) return
+        levels[STATE].sounds[data.id + 1].start()
     });
     
 })

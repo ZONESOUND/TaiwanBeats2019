@@ -65,4 +65,4 @@ function showBGhtml() {
 
 function rmBGhtml() {
 	$("#background").hide();
-}
+	}

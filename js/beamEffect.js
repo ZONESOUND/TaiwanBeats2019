@@ -77,8 +77,6 @@ function createline(color, x, y) {
 
     bgSprite.blendMode = PIXI.BLEND_MODES.DARKEN;
     console.log(bgSprite)
-    // bgSprite.parentLayer = container;
-    // bgSprite.BLEND_MODES = PIXI.BLEND_MODES.ADD
     stage.addChild(container);
     
     containers.push(container)

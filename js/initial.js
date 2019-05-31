@@ -1,6 +1,7 @@
 var DEVICE_EVENT = 'click'
 var UUID = localStorage.getItem("uuid");
 let STATE = 0
+let USER_GESTURE;
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     DEVICE_EVENT = 'touchstart'

@@ -49,6 +49,9 @@ function buttonSetup(level) {
     buttonGraphic[i].on('pointerdown', function () {
       if (this.alpha == 0) buttonShine(this)
       level.trigger[this.id].func(level.trigger[this.id].options)
+      console.log(level.sounds[this.id + 1])
+      console.log(level.sounds[this.id + 1])
+      if (level.sounds[this.id + 1] == undefined) return
       level.sounds[this.id + 1].start()
 
     })
