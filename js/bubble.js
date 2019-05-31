@@ -1,25 +1,37 @@
-let lush = new Tone.Player('./sound/lush.wav').toMaster()
+// let lush = new Tone.Player('./sound/lush.wav').toMaster()
 //let bubbleSprites = [];
+let posterTexture
+let posterLoader = new Loader()
+function prelaodPoster() {
+	if (posterLoader.progress == 100) return
+  	posterLoader
+		.add('poster', './image/Part1/poster.jpeg')
+		.load(( _, resources) => {
+			posterTexture = resources['poster'].texture
+		})
+}
 
-function bubble() {
-	randomBubble();
+let bubble = function() {
+	if (!posterTexture) {
+		posterTexture = Texture.from('./image/Part1/poster.jpeg')
+	} 
+	randomBubble(posterTexture);
 	setTimeout(function() {
-		randomBubble();
+		randomBubble(posterTexture);
 	}, 200);
 	setTimeout(function() {
-		randomBubble();
+		randomBubble(posterTexture);
 	}, 600);
-	lush.restart();
+	// lush.restart();
 	//bubbleSprites.push(createBubble(loader.resources["desert"].texture, 100, 100, 100))
 }
 
-function randomBubble() {
+function randomBubble(image) {
 	let randX = Math.floor(Math.random()*vw/2 - vw/4);
 	let randY = Math.floor(Math.random()*vh/2 - vh/4);
 	let maxR = Math.floor(Math.random()*vh/2 + vh/2);
 	let randS = Math.random()*0.07+1.07;
-	createBubble(loader.resources["desert"].texture, randX, randY, maxR, randS)
-
+	createBubble(image, randX, randY, maxR, randS)
 	
 }
 

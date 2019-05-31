@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="./css/loading.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Taiwan Beats 2019</title>
+    <!-- cdn -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.8.9/Tone.js"></script>
@@ -13,14 +18,81 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/plugins/PixiPlugin.min.js"></script>
     <script src="https://cdn.rawgit.com/sbfkcel/pixi-apngAndGif/master/dist/PixiApngAndGif.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/pixi-filters.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <!-- font icon -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <!-- local library -->
     <script src="./lib/bodyScrollLock.js"></script>
+    <script src="./lib/bootstrap-notify.js"></script>
+    
+    <!-- local js -->
     <script src="./js/initial.js"></script>
     <script src="./js/config.js"></script>
+    <script src="./js/pixisetup.js"></script>
     <script src="./js/client.js"></script>
     <script src="./js/bubble.js"></script>
     <script src="./js/gif.js"></script>
+    <script src="./js/profilepool.js"></script>
+    <script src="./js/showimage.js"></script>
+    <script src="./js/genNotify.js"></script>
+    <script src="./js/backgroundHandle.js"></script>
+    <script src="./js/appear.js"></script>
+    <script src="./js/smoke.js"></script>
+    <script src="./js/waterdrip.js"></script>
+    <script src="./js/beamEffect.js"></script>
+    <script src="./js/button.js"></script>
 </head>
 <body>
-    <script src="./js/pixisetup.js"></script>
-    <script src="./js/view.js"></script>
+    <canvas id='myCanvas'></canvas>
+    <script src="./js/level.js"></script>
+    <div id="background">
+        <div class="glow"></div>
+        <div class="particles">
+            <div class="rotate">
+    
+                <div class="angle">
+                    <div class="size">
+                        <div class="position">
+                            <div class="pulse">
+                                <div class="particle">
+    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+    
+                <div class="angle">
+                    <div class="size">
+                        <div class="position">
+                            <div class="pulse">
+                                <div class="particle">
+    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="angle">
+                    <div class="size">
+                        <div class="position">
+                            <div class="pulse">
+                                <div class="particle">
+    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+    
+        </div>
+    </div>
 </body>

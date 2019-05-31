@@ -1,6 +1,6 @@
 var DEVICE_EVENT = 'click'
 var UUID = localStorage.getItem("uuid");
-
+let STATE = 0
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     DEVICE_EVENT = 'touchstart'
@@ -8,7 +8,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 
 $(document).ready(function () {
     document.addEventListener(DEVICE_EVENT, initial)
-
+    loadingStart()
 });
 
 function initial() {
@@ -53,4 +53,19 @@ function openFullscreen() {
         /* IE/Edge */
         document.documentElement.msRequestFullscreen();
     }
+}
+
+function loadingStart() {
+    $('body').css({
+        'background-color': '#000',
+        'color': '#ccc'
+    })
+    $('body').append('<div class="loader">Loading</div>')
+}
+
+function loadingStop() {
+    $('body').css({
+        'background-color': 'transparent',
+    })
+    $(".loader").remove();
 }
