@@ -61,7 +61,9 @@ function buttonSetup() {
         let lineWidth = 3;
         let gt = new PIXI.Graphics();
         //gt.beginFill(0x123123);
-        gt.lineStyle(lineWidth, 0x5a8ee2);
+        let lineColor = 0x5a8ee2;
+        if (control) lineColor = 0xff5151
+        gt.lineStyle(lineWidth, lineColor);
         gt.drawRect(xStart, yStart, bw-lineWidth, bh-lineWidth);﻿
         //gt.endFill();
 
