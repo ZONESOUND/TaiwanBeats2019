@@ -180,7 +180,9 @@ loadScense(STATE)
 
 function changeScense(index) {
     levels[STATE].leave()
-    bgSprite.destroy()
+    stage.children.forEach((s) => {
+        stage.removeChild(s)
+    })
     if(STATE == 0) {
         rmBGhtml()
     }
