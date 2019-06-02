@@ -12,6 +12,7 @@ socket.on('connect', () => {
 
     socket.on('broadcast', (data) => {
         console.log(data)
+        
         if (data.state != undefined) {
             changeScenes(data.state)
             return
@@ -37,8 +38,9 @@ window.addEventListener('beforeunload', function (e) {
 });
 
 function emit(data) {
-    console.log(data);
+    
     data.uuid = UUID;
+    console.log(data);
     socket.emit('broadcast', data);
 }
 

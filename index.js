@@ -7,9 +7,9 @@ const server = http.createServer((req, res) => {
 });
 const io = socketio(server);
 var scene = 0;
-var uuidSet = new Set();
 var sceneInt = null;
 var count = 0;
+var waitTime = 10000;//60000*2;
 
 io.on('connection', (socket, req) => {
 
@@ -18,32 +18,26 @@ io.on('connection', (socket, req) => {
     })
 
     socket.on('broadcast',(data) => {
+        //console.log(data);
         io.emit('broadcast', data);
+        if (data.state != undefined) {
+            scene = (data.state+1)%4;
+            setSceneInterval();
+        }
     })
 
     socket.on('connected', (data) => {
-        uuidSet.add(data.uuid);
-        socket.emit('broadcast', {state : scene});
+        io.emit('broadcast', {state : scene});
         count ++;
         console.log("TOTAL CONNECT: " + count + ", NOW SCENE: "+ scene);
         if (sceneInt == null) {
             scene = 1;
-            sceneInt = setInterval(function() {
-                //console.log("change scene: "+scene);
-                socket.emit('broadcast', {state : scene});
-                scene = (scene+1)%4;
-                
-            }, 60000*2);
+            setSceneInterval();
         }
     })
 
     socket.on('disconnected',(data) => {
-        uuidSet.delete(data.uuid);
-        if (uuidSet.size == 0) {
-            console.log("end interval");
-            clearInterval(sceneInt);
-            sceneInt = null;
-        }
+        checkSceneInterval();
     })
 
 })
@@ -52,3 +46,22 @@ server.listen(port, function listening() {
     console.log("Listening on %d", server.address().port);
 });
 
+function setSceneInterval() {
+    clearInterval(sceneInt);
+    sceneInt = setInterval(function() {
+        if (checkSceneInterval()) return;
+        io.emit('broadcast', {state : scene});
+        scene = (scene+1)%4;
+    }, waitTime);
+}
+
+function checkSceneInterval() {
+    if (io.engine.clientsCount == 0) {
+        console.log("end interval");
+        clearInterval(sceneInt);
+        sceneInt = null;
+        scene = 0;
+        return true;
+    }
+    return false;
+}
