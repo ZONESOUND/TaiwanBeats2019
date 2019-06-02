@@ -23,7 +23,6 @@ io.on('connection', (socket, req) => {
     socket.on('disconnected',(data) => {
     })
 
-
 })
 
 server.listen(port, function listening() {

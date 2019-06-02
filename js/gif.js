@@ -51,9 +51,9 @@ function gifAppearWithTextures(gifTextures, changeSize, random, fit, time) {
     var y = 0;
     if (random) {
         x = Math.random() * vw / 2 - vw / 4;
-        y = Math.random() * vh / 2;
+        y = Math.random() * vh / 2 - vh / 4;
     }
-    gifAppearWithSprite(animatedSprite, changeSize, x, y, time);
+    let sprite = gifAppearWithSprite(animatedSprite, changeSize, x, y, time);
     if (fit) spriteFitScreen(sprite);
 }
 
