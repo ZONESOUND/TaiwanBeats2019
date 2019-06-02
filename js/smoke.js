@@ -1,11 +1,12 @@
 let particles = [];
-let particleCount = 100;
-let maxVelocity = 1;
-let targetFPS = 35;
-let canvasWidth = 400;
-let canvasHeight = 400;
+let particleCount = 100
+let maxVelocity = 5
+let targetFPS = 35
+let canvasWidth = 400
+let canvasHeight = 400
 let canvas, context
 let starting, stopping
+let particles_save = []
 
 var imageObj = new Image();
 imageObj.onload = function () {
@@ -29,14 +30,12 @@ function initgas() {
 }
 
 function draw() {
-    // context.clearRect(0, 0, canvas.width, canvas.height);
 
     context.fillStyle = "rgba(0, 0, 0, 0)";
     context.fillRect(0, 0, 400, 400);
-    console.log(particles.length)
+
     particles.forEach(function (particle) {
         particle.draw();
-        console.log('draw')
     });
 }
 
@@ -53,7 +52,7 @@ function generateRandom(min, max) {
 
 function gasstop() {
     stopping = setInterval(function () {
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 10; i++) {
             particles.pop()
         }
         if(particles.length == 0 ) {
@@ -68,10 +67,12 @@ function gasstart() {
     $('#myCanvas').css('z-index', 10)
     if(context) {
         starting = setInterval(function () {
+            console.log('start')
             draw();
             update();
             if (particles.length <= 0) {
-                gasGenerate()
+                console.log('clear')
+                particles = particles_save.slice()
                 clearInterval(starting)
             }
         }, 1000 / targetFPS);
@@ -86,7 +87,7 @@ function gasGenerate() {
         particles.push(particle);
     }
 
-    console.log(particles.length)
+    particles_save = particles.slice()
 }
 
 

@@ -12,7 +12,7 @@ let glitchLoader = new Loader()
 
 function preloadLogoVideo() {
 	if (logoLoader.progress == 100) return
-	logoLoader.add('logoVideo', './video/Part1/LogoRotate.mp4')
+	logoLoader.add('logoVideo', './video/Part1/logoRotate.mp4')
 	.load(( _, resources ) => {
 		logoVideo = resources['logoVideo'].data
 	})
@@ -45,7 +45,7 @@ function appearDemon(time) {
 
 function appearLogo(time) {
 	if (!logoVideo) {
-		logoVideo = './video/Part1/LogoRotate.mp4'
+		logoVideo = './video/Part1/logoRotate.mp4'
 	}
 	appearVideo(logoVideo, time)
 }

@@ -17,7 +17,7 @@
   height: 500px;
   border-radius: 50%;
   -webkit-animation: glow 15s linear 0s infinite forwards;
-  background: url('https://t0.rbxcdn.com/182160a5d7d68c6d4be14a6d9f9e5598');
+  background: url('../image/bluelight.png');
   background-size: contain;
 }
 
@@ -71,7 +71,7 @@
   width: 100px;
   height: 100px;
 /*   background: url('https://t0.rbxcdn.com/182160a5d7d68c6d4be14a6d9f9e5598'); */
-  background: url('http://www.officialpsds.com/images/thumbs/shine-light-bright-psd43123.png');
+  background: url('../image/whitelight.png');
   
   background-size: contain;
 }

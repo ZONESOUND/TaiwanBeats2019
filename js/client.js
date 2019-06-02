@@ -11,13 +11,12 @@ socket.on('connect', () => {
     socket.emit('connected', {uuid: UUID});
 
     socket.on('broadcast', (data) => {
-        console.log(data);
-        if (data.uuid == UUID) return;
-        if(data.state != undefined) {
-            STATE = data.state
-            changeScense(STATE)
+        console.log(data)
+        if (data.state != undefined) {
+            changeScenes(data.state)
             return
         }
+        if (data.uuid == UUID) return;
         levels[STATE].trigger[data.id].func(levels[STATE].trigger[data.id].options)
         if (levels[STATE].sounds[data.id + 1] == undefined) return
         levels[STATE].sounds[data.id + 1].start()

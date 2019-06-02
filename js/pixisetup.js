@@ -44,8 +44,8 @@ function resize() {
     let h = window.innerHeight;
 
     renderer.resize(w, h);
-    stage.x = vw / 2
-    stage.y = vh / 2
+    stage.x = w / 2
+    stage.y = h / 2
 }
 
 
