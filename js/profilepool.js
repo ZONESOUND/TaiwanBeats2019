@@ -1,6 +1,6 @@
 let profileContainer = new Container()
 let profileTexture = []
-let size = 500;
+let size = 300;
 
 function profileSetup() {
     profileTexture[0] = Texture.from('./image/Part1/bird.jpg')
