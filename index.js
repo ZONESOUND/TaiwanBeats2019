@@ -9,7 +9,7 @@ const io = socketio(server);
 var scene = 0;
 var sceneInt = null;
 var count = 0;
-var waitTime = 10000;//60000*2;
+var waitTime = 60000*2;
 
 io.on('connection', (socket, req) => {
 
