@@ -60,9 +60,53 @@ function loop_video(time, period) {
 }
 
 function showBGhtml() {
+	// $('body').append(bghtml)
+	console.log('h')
 	$("#background").show();
 }
 
 function rmBGhtml() {
 	$("#background").hide();
-	}
+	// $('#background').remove()
+}
+
+
+
+let bghtml = 
+' <div id="background"> ' +
+    '<div class="glow"></div>'+
+    '<div class="particles">'+
+        '<div class="rotate">'+
+            '<div class="angle">'+
+                '<div class="size">'+
+                    '<div class="position">'+
+                        '<div class="pulse">'+
+                            '<div class="particle">'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+            '<div class="angle">'+
+                '<div class="size">'+
+                    '<div class="position">'+
+                        '<div class="pulse">'+
+                            '<div class="particle">' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>'+
+            '</div>' +
+            '<div class="angle">' +
+                '<div class = "size">'+
+                    '<div class="position">' +
+                        '<div class="pulse">' +
+                            '<div class="particle">' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+    '</div>' +
+'</div>'

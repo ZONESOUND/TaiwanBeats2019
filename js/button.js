@@ -31,7 +31,7 @@
 // window.addEventListener('touchstart', buttonClick);
 // window.addEventListener('click', buttonClick);
 function buttonSetup(level) {
-  console.log('level:' + level)
+
   for (var i = 0; i < 4; i++) {
 
     let bw = vw / 2
@@ -49,8 +49,6 @@ function buttonSetup(level) {
     buttonGraphic[i].on('pointerdown', function () {
       if (this.alpha == 0) buttonShine(this)
       level.trigger[this.id].func(level.trigger[this.id].options)
-      console.log(level.sounds[this.id + 1])
-      console.log(level.sounds[this.id + 1])
       if (level.sounds[this.id + 1] == undefined) return
       level.sounds[this.id + 1].start()
 

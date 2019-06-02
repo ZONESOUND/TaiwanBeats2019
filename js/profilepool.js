@@ -1,5 +1,6 @@
 let profileContainer = new Container()
 let profileTexture = []
+let size = 500;
 
 function profileSetup() {
     profileTexture[0] = Texture.from('./image/Part1/bird.jpg')
@@ -7,7 +8,11 @@ function profileSetup() {
     // profileTexture[0] = resources['bird'].texture
     // profileTexture[1] = resources['callico'].texture
 
-    for (var i = 0; i < 150; i++) {
+    if (DEVICE_TYPE == 'mobile') {
+        size = 150
+    }
+
+    for (var i = 0; i < size; i++) {
         let index = Math.floor(Math.random() * 2)
         let px = Math.random() * vw - (vw / 2)
         let py = Math.random() * vh - (vh / 2)

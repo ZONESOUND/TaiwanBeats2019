@@ -2,7 +2,6 @@ let bgsound
 
 class Level {
     constructor(soundUrl, videoUrl, trigger, init) {
-
         this.soundUrl = soundUrl
         this.videoUrl = videoUrl
         this.trigger  = trigger
@@ -11,20 +10,31 @@ class Level {
         this.bgLoader = new Loader()
         this.init = init
         this.bgSprite = {}
+        this.soundload = false
     }
 
     loadBG() {
         if (this.soundUrl) {
-            bgsound = new Tone.Player(this.soundUrl[0], () => {
-                Tone.Transport.start();
-                bgVideoSource.currentTime = 0
-            }).toMaster()
-            bgsound.sync().start();
-            console.log(Tone.Transport)
-            bgsound.loop = true
+            if(this.sounds.length == 0 ) {
+                this.sounds[0] = new Tone.Player(this.soundUrl[0], () => {
+                    bgsound = this.sounds[0]
+                    bgsound.sync().start()
+                    bgsound.loop = true
+                })
+
+                Tone.Buffer.on('load', () => {
+                    Tone.Transport.start()
+                    bgVideoSource.currentTime = 0
+                })
+            } else {
+                bgsound = this.sounds[0]
+                bgsound.sync().start()
+                bgsound.loop = true
+                Tone.Transport.start()
+            }
+            
         } 
         let level_ = this
-        console.group(this.videoUrl)
         if(this.videoUrl) {
             
             let tempSprite = this.bgSprite
@@ -66,21 +76,24 @@ class Level {
     loadSound() {
         if(!this.soundUrl) return
         let sounds = []
-        this.soundUrl.forEach(function(url) {
+        this.soundUrl.forEach(function(url, i) {
             
             if(url == '') {
-                console.log(url)
                 return 
             }
             let sound = new Tone.Player(url).toMaster()
-            sounds.push(sound)
+            sounds[i] = sound
         })
         this.sounds = sounds
     }
 
     leave() {
         bgsound.unsync().stop()
-        Tone.Transport.stop();
+        Tone.Transport.stop()
+        bgsound = null
+        loadingStart()
+        clearView()
+
     }
 }
 
@@ -101,7 +114,7 @@ let trigger_function = [{
     'func': createProfile,
     'options': null,
 }]
-let preloadFunction = [profileSetup, preloadCatImage, prelaodPoster, preloadLogoVideo]
+let preloadFunction = [profileSetup, preloadCatImage, prelaodPoster, preloadLogoVideo, initgas]
 let soundUrl = ['./sound/Part1/background.wav', './sound/Part1/calico.wav', './sound/Part1/meow.wav', './sound/Part1/lush.wav', './sound/Part1/hacrash.wav']
 let videoUrl = ['']
 
@@ -120,7 +133,7 @@ trigger_function = [{
     'options': 1000
 }, {
     'func': gasanimate,
-    'options': 1000,
+    'options': 500,
 }]
 
 preloadFunction = [preloadGif, waterDripSetup, initgas]
@@ -172,29 +185,35 @@ videoUrl = ['./video/Part4/background.mp4']
 levels.push(new Level(soundUrl, videoUrl, trigger_function, preloadFunction))
 
 
-
-
-loadScense(STATE)
-
-
-
-function changeScense(index) {
-    levels[STATE].leave()
+function clearView() {
+    stage.removeChild(bgSprite)
     stage.children.forEach((s) => {
-        stage.removeChild(s)
+        s.destroy()
     })
-    if(STATE == 0) {
-        rmBGhtml()
+    removeBeam()
+    rmBGhtml()
+
+}
+ 
+
+loadScenes(STATE)
+
+function changeScenes(index) {
+    console.log('index:' + index)
+    console.log('state:' + STATE)
+
+    if(index == STATE) return 
+    if (index < 0 || index > 3) {
+        console.log('Exceed Limit!!!!!')
+        return
     }
-    if(STATE == 3) {
-        removeBeam()
-    }
+    levels[STATE].leave()
     STATE = index
-    loadScense(index)
+    loadScenes(index)
 }
 
 
-function loadScense(index) {
+function loadScenes(index) {
     pixiSetup()
     levels[index].loadBG()
     levels[index].loadSound()

@@ -19,7 +19,7 @@ function gifLoad(a, s) {
     thunderGifTextures = window.thundergif.textures;
     thunderGifTextures = thunderGifTextures.slice(0, thunderGifTextures.length-1);
     delete(window.heartgif);
-    delete(windwo.thundergif);
+    delete(window.thundergif);
 }
 
 
