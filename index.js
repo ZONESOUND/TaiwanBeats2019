@@ -29,11 +29,11 @@ io.on('connection', (socket, req) => {
         if (sceneInt == null) {
             scene = 1;
             sceneInt = setInterval(function() {
-                console.log("change scene: "+scene);
+                //console.log("change scene: "+scene);
                 socket.emit('broadcast', {state : scene});
                 scene = (scene+1)%4;
                 
-            }, 10000);
+            }, 60000*2);
         }
     })
 
