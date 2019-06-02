@@ -8,6 +8,7 @@ socket.on('connect', () => {
         console.log(UUID)
         localStorage.setItem("uuid", UUID);
     }
+    socket.emit('connected', {uuid: UUID});
 
     socket.on('broadcast', (data) => {
         console.log(data);
@@ -26,6 +27,7 @@ socket.on('connect', () => {
 
 socket.on('disconnect', function () {
     console.log('user disconnected');
+    socket.emit('disconnected', {uuid: UUID});
 });
 
 
