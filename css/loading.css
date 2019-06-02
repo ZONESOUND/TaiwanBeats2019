@@ -21,9 +21,9 @@
     box-sizing: border-box;
     text-align: center;
     z-index: 10;
-    top:50%;
+    top :35%;
     left:50%;
-    transform: translateY(-50%);
+    transform: translateY(-35%);
     transform: translateX(-50%);
     text-transform: uppercase;
 }
