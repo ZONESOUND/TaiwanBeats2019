@@ -19,6 +19,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 
 $(document).ready(function () {
     document.addEventListener(DEVICE_EVENT, initial)
+    if (document.URL.split('/').slice(-1)[0].split('?')[0] != 'exhibition.html') return
     loadingStart()
 });
 
