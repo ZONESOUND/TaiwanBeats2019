@@ -1,6 +1,6 @@
 let particles = [];
 let particleCount = 100
-let maxVelocity = 5
+let maxVelocity = 10
 let targetFPS = 60
 let canvasWidth = 400
 let canvasHeight = 400

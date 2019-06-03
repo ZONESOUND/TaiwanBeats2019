@@ -73,7 +73,7 @@ function buttonSetup() {
         buttonGraphic[i].on('pointerdown', function() {
             let data = {};
             if (control) {
-                if (Date.now() - time_record < 1000) {
+                if (Date.now() - time_record < 300) {
                     alert('不要按這麼快，拜託！！')
                     return 
                 }

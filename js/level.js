@@ -134,7 +134,7 @@ trigger_function = [{
     'options': 1000
 }, {
     'func': gasanimate,
-    'options': 500,
+    'options': 1000,
 }]
 
 preloadFunction = [preloadGif, waterDripSetup, initgas]
