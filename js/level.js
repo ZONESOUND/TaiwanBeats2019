@@ -88,12 +88,13 @@ class Level {
     }
 
     leave() {
+        if(!bgsound) return
         bgsound.unsync().stop()
         Tone.Transport.stop()
         bgsound = null
         loadingStart()
         clearView()
-
+        
     }
 }
 
@@ -176,7 +177,7 @@ trigger_function = [{
     'options': 3000
 }, {
     'func': loopy,
-    'options': 1500,
+    'options': 500,
 }]
 
 preloadFunction = [preloadGlitchVideo]

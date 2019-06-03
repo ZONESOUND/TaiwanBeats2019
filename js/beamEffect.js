@@ -19,6 +19,7 @@ function removeBeam() {
     containers.forEach((c) => {
         c.destroy()
     })
+    containers = []
 }
 
 
@@ -76,10 +77,10 @@ function createline(color, x, y) {
     })
 
     bgSprite.blendMode = PIXI.BLEND_MODES.DARKEN;
-    console.log(bgSprite)
     stage.addChild(container);
     
     containers.push(container)
+    console.log(containers.length)
     
 }
 

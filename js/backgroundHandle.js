@@ -1,7 +1,9 @@
 // let freeze = new Tone.Player('./sound/freeze.wav').toMaster()
 //glitch(3000)
-
+let time_record = Date.now()
 function glitch(timeoutMS) {
+
+	removeBeam()
 
 	let filter = new PIXI.filters.GlitchFilter;
 	filter.fillMode = PIXI.filters.GlitchFilter.MIRROR;
@@ -31,12 +33,14 @@ function glitch(timeoutMS) {
 
 //loop(1500, 0.4)
 function loopy(time, period = 0.4) {
+	if(Date.now() - time_record < 1000) return
 	let ticker = loop_video(time, period);
 	loop_sound(time, period);
 	setTimeout(function() {
 		ticker.stop();
 		Tone.Transport.loop = false;
 	}, time)
+	time_record = Date.now()
 }
 
 function loop_sound(time, period) {

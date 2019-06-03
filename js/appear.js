@@ -58,6 +58,9 @@ function appearGlitch(time) {
 	if (!glitchVideo) {
 		glitchVideo = './video/Part4/Glitch.mp4'
 	}
+    if (containers.length >= 30) {
+    	removeBeam()
+    }
 	appearVideo(glitchVideo, time)
 }
 
