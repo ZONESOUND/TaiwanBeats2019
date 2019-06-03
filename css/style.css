@@ -28,9 +28,10 @@ canvas {
 	color: black;
 	font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
 	background-color: rgba(255, 255, 255, 0.3);
-	backdrop-filter: blur(10px);  
-	-webkit-backdrop-filter: blur(10px);
+	/* backdrop-filter: blur(10px);   */
+	/* -webkit-backdrop-filter: blur(10px); */
 }
+
 [data-notify="container"] {
 	padding: 5px 15px;
 }
