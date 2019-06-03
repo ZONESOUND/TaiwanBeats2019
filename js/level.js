@@ -162,7 +162,7 @@ trigger_function = [{
 preloadFunction = [preloadDemeonVideo]
 soundUrl = ['./sound/Part3/background.wav', './sound/Part3/demon.wav', './sound/Part3/girl.wav', './sound/Part3/honk.wav', './sound/Part3/inbox.wav']
 videoUrl = ['./video/Part3/background.mp4']
-levels.push(new Level(soundUrl, videoUrl, trigger_function, preloadFunction))
+levels.push(new Level(soundUrl, videoUrl, trigger_function, preloadFunction, initgas))
 
 
 
@@ -183,7 +183,7 @@ trigger_function = [{
 preloadFunction = [preloadGlitchVideo]
 soundUrl = ['./sound/Part4/background.wav', './sound/Part4/freeze.wav', './sound/Part4/robot.wav', './sound/Part4/transformer.wav', '']
 videoUrl = ['./video/Part4/background.mp4']
-levels.push(new Level(soundUrl, videoUrl, trigger_function, preloadFunction))
+levels.push(new Level(soundUrl, videoUrl, trigger_function, preloadFunction, initgas))
 
 
 function clearView() {
@@ -198,6 +198,7 @@ function clearView() {
  
 
 loadScenes(STATE)
+pixiSetup()
 
 function changeScenes(index) {
     console.log('index:' + index)
@@ -215,7 +216,6 @@ function changeScenes(index) {
 
 
 function loadScenes(index) {
-    pixiSetup()
     levels[index].loadBG()
     levels[index].loadSound()
     levels[index].initFuntion()

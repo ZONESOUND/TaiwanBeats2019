@@ -21,6 +21,8 @@ window.onresize = resize;
 document.body.appendChild(app.view);
 setup();
 
+let time_record = 0
+
 
 function setup() {
     if (getParameterByName('control') == "true") {
@@ -70,10 +72,18 @@ function buttonSetup() {
 
         buttonGraphic[i].on('pointerdown', function() {
             let data = {};
-            if (control) data.state = this.id;
-            else data.id = this.id;
+            if (control) {
+                if (Date.now() - time_record < 1000) {
+                    alert('不要按這麼快，拜託！！')
+                    return 
+                }
+                data.state = this.id;
+            }
+            else {
+                data.id = this.id
+            }
             emit(data);
-
+            time_record = Date.now()
             if (this.alpha == 0) buttonShine(this)
 
         })

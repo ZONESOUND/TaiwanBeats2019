@@ -1,5 +1,4 @@
-
-
+let trigger_time_record = Date.now()
 socket.on('connect', () => {
 
     console.log("connect");
@@ -18,9 +17,13 @@ socket.on('connect', () => {
             return
         }
         if (data.uuid == UUID) return;
+        if (Date.now() - trigger_time_record < 200) {
+            return
+        }
         levels[STATE].trigger[data.id].func(levels[STATE].trigger[data.id].options)
         if (levels[STATE].sounds[data.id + 1] == undefined) return
         levels[STATE].sounds[data.id + 1].start()
+        trigger_time_record = Date.now()
     });
     
 })

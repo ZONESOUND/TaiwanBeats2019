@@ -1,7 +1,7 @@
 let particles = [];
 let particleCount = 100
 let maxVelocity = 5
-let targetFPS = 35
+let targetFPS = 60
 let canvasWidth = 400
 let canvasHeight = 400
 let canvas, context
@@ -19,6 +19,7 @@ imageObj.src = './image/Part2/smoke.png';
 
 
 function initgas() {
+
     canvas = document.getElementById('myCanvas');
     context = canvas.getContext('2d');
     if (canvas.getContext) {
@@ -51,23 +52,30 @@ function generateRandom(min, max) {
 }
 
 function gasstop() {
-    clearInterval(stopping)
-    stopping = setInterval(function () {
-        console.log('stop')
-        for (var i = 0; i < 10; i++) {
-            particles.pop()
-        }
-        if(particles.length == 0 ) {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            $('#myCanvas').css('z-index', -10)
-            clearInterval(stopping)        
-        }
-    }, 1000 / targetFPS);
+    console.log('here')
+    clearInterval(starting)
+    $('#myCanvas').css('z-index', -10)
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    // clearInterval(stopping)
+    // stopping = setInterval(function () {
+    //     console.log('stop')
+    //     for (var i = 0; i < 10; i++) {
+    //         particles.pop()
+    //     }
+    //     if(particles.length == 0 ) {
+    //         context.clearRect(0, 0, canvas.width, canvas.height);
+    //         $('#myCanvas').css('z-index', -10)
+    //         clearInterval(stopping)
+    //         clearInterval(starting)
+    //     }
+    // }, 1000 / targetFPS);
 }
 
 var number = 0
 
 function gasstart() {
+    console.log(particles.length)
+    console.log(particles.length)
     $('#myCanvas').css('z-index', 10)
     if(context) {
         clearInterval(starting)
@@ -77,20 +85,23 @@ function gasstart() {
             console.log(particles.length)
             draw();
             update();
-            if (particles.length <= 0) {
-                console.log('clear')
-                clearInterval(starting)
-            }
+            // if (particles.length <= 0) {
+            //     console.log('clear')
+            //     clearInterval(starting)
+            // }
         }, 1000 / targetFPS);
     }
 }
 
 function gasGenerate() {
+    if(particles.length > 200) return
     for (let i = 0; i < particleCount; ++i) {
         let particle = new Particle(context);
         particle.setPosition(generateRandom(0, canvasWidth), generateRandom(0, canvasHeight));
         particle.setVelocity(generateRandom(-maxVelocity, maxVelocity), generateRandom(-maxVelocity, maxVelocity));
+        //particles.push(particle);
         particles.push(particle);
+
     }
 
     particles_save = particles.slice()
