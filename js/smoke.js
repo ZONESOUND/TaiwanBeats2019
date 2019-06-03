@@ -51,28 +51,34 @@ function generateRandom(min, max) {
 }
 
 function gasstop() {
+    clearInterval(stopping)
     stopping = setInterval(function () {
+        console.log('stop')
         for (var i = 0; i < 10; i++) {
             particles.pop()
         }
         if(particles.length == 0 ) {
             context.clearRect(0, 0, canvas.width, canvas.height);
             $('#myCanvas').css('z-index', -10)
-            clearInterval(stopping)            
+            clearInterval(stopping)        
         }
     }, 1000 / targetFPS);
 }
 
+var number = 0
+
 function gasstart() {
     $('#myCanvas').css('z-index', 10)
     if(context) {
+        clearInterval(starting)
+        particles = particles_save.slice()
         starting = setInterval(function () {
             console.log('start')
+            console.log(particles.length)
             draw();
             update();
             if (particles.length <= 0) {
                 console.log('clear')
-                particles = particles_save.slice()
                 clearInterval(starting)
             }
         }, 1000 / targetFPS);
