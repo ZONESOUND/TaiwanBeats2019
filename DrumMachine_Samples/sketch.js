@@ -87,21 +87,10 @@ function mousePressed() {
     }
 }
 
-function startDrum() {
-    if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
-      if (!drums.isPlaying) {
-        drums.metro.metroTicks = 0;
-        drums.loop();
-      } else {
-        drums.stop();
-      }
-    } else {
-      console.log('oops, be patient as drums load...');
-    }
-}
 
 function keyPressed(){
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
+      alert('inside')
       if (!drums.isPlaying) {
         drums.metro.metroTicks = 0;
         drums.loop();
@@ -114,9 +103,6 @@ function keyPressed(){
 }
 
 function canvasPressed(){
-
- startDrum()
-
   let rowClicked = floor(4*mouseY/height);
   let indexClicked = floor(16*mouseX/width);
   if (rowClicked === 0){
