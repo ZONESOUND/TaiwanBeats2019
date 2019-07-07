@@ -76,6 +76,7 @@ function setup() {
 
 function mousePressed() {
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
+      alert('inside')
       if (!drums.isPlaying) {
         drums.metro.metroTicks = 0;
         drums.loop();
@@ -90,7 +91,6 @@ function mousePressed() {
 
 function keyPressed(){
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
-      alert('inside')
       if (!drums.isPlaying) {
         drums.metro.metroTicks = 0;
         drums.loop();
