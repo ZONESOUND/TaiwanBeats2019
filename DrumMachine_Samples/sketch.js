@@ -88,7 +88,18 @@ function mousePressed() {
     }
 }
   
-
+function touchStarted() {
+    if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
+      if (!drums.isPlaying) {
+        drums.metro.metroTicks = 0;
+        drums.loop();
+      } else {
+        drums.stop();
+      }
+    } else {
+      console.log('oops, be patient as drums load...');
+    }
+}
 function keyPressed(){
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
       if(!drums.isPlaying) {
