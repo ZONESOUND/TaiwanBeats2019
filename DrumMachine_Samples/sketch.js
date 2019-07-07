@@ -17,13 +17,15 @@ function setup() {
   cellWidth = width/beatLength;
   cursorPos = 0;
   
-  hh = loadSound('assets/hh_sample.mp3', () => {});
-  clap = loadSound('assets/clap_sample.mp3',()=>{});
-  bass = loadSound('assets/bass_sample.mp3',()=>{});
+  hh = loadSound('assets/1.mp3', () => {});
+  clap = loadSound('assets/2.mp3',()=>{});
+  bass = loadSound('assets/3.mp3',()=>{});
+  sound = loadSound('assets/4.mp3', () => { });
   
   hPat = [0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1];
   cPat = [1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0];
   bPat = [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1];
+  dPat = [0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1];
   sPat = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
   
   hPhrase = new p5.Phrase('hh', (time) => {
@@ -47,12 +49,20 @@ function setup() {
     bass.play(time);
   }, bPat);
 
+  dPhrase = new p5.Phrase('sound', (time) => {
+    let data = {};
+    data.id = 3
+    emit(data);
+    sound.play(time);
+  }, dPat);
+
 
   drums = new p5.Part();
 
   drums.addPhrase(hPhrase);
   drums.addPhrase(cPhrase);
   drums.addPhrase(bPhrase);
+  drums.addPhrase(dPhrase);
   drums.addPhrase('seq', sequence, sPat);
   
   
@@ -81,7 +91,7 @@ function keyPressed(){
 }
 
 function canvasPressed(){
-  let rowClicked = floor(3*mouseY/height);
+  let rowClicked = floor(4*mouseY/height);
   let indexClicked = floor(16*mouseX/width);
   if (rowClicked === 0){
     console.log('first row '+indexClicked);
@@ -92,6 +102,9 @@ function canvasPressed(){
   }else if (rowClicked === 2){
     console.log('third row');
     bPat[indexClicked] = +!bPat[indexClicked];
+  } else if (rowClicked === 3) {
+    console.log('forth row');
+    dPat[indexClicked] = +!dPat[indexClicked];
   }
   drawMatrix();
 }
@@ -106,19 +119,22 @@ function drawMatrix(){ //draw dots that represent the the pressed notes in step.
     //startx, starty, endx, endy
     line(i*cellWidth, 0, i*cellWidth, height);
   }
-  for (let i=0; i<4; i++){
-    line(0, i*height/3, width, i*height/3);
+  for (let i=0; i<5; i++){
+    line(0, i*height/4, width, i*height/4);
   }
   noStroke();
   for (let i=0; i<beatLength; i++){
     if (hPat[i]===1){
-    ellipse(i*cellWidth+0.5*cellWidth, height/6, 10);
+    ellipse(i*cellWidth+0.5*cellWidth, height/8, 10);
     }
     if (cPat[i]===1){
-    ellipse(i*cellWidth+0.5*cellWidth, height/2, 10);
+    ellipse(i*cellWidth+0.5*cellWidth, height*3/8, 10);
     }
     if (bPat[i]===1){
-    ellipse(i*cellWidth+0.5*cellWidth, height*5/6, 10);
+    ellipse(i*cellWidth+0.5*cellWidth, height*5/8, 10);
+    }
+    if (dPat[i] === 1) {
+      ellipse(i * cellWidth + 0.5 * cellWidth, height * 7 / 8, 10);
     }
   }
 }
