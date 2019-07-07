@@ -75,10 +75,10 @@ function setup() {
 
 
 function mousePressed() {
-  alert('mouse')
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
-      alert('inside')
+      alert(!drums.isPlaying)
       if (!drums.isPlaying) {
+        alert('drum')
         drums.metro.metroTicks = 0;
         drums.loop();
       } else {
