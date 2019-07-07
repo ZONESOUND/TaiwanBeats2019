@@ -89,7 +89,6 @@ function mousePressed() {
 }
   
 function touchStarted() {
-  alert('touch')
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
       if (!drums.isPlaying) {
         drums.metro.metroTicks = 0;
@@ -98,6 +97,7 @@ function touchStarted() {
         drums.stop();
       }
     } else {
+      alert('oops, be patient as drums load...')
       console.log('oops, be patient as drums load...');
     }
 }
