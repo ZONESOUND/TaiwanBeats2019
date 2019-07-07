@@ -12,7 +12,7 @@ let cursorPos;
 function setup() {
   cnv=createCanvas(320, 60);
   cnv.mousePressed(canvasPressed);
-  
+  cnv.touchStarted(startDrum)
   beatLength =16;
   cellWidth = width/beatLength;
   cursorPos = 0;
@@ -87,8 +87,8 @@ function mousePressed() {
       console.log('oops, be patient as drums load...');
     }
 }
-  
-function touchStarted() {
+
+function startDrum() {
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
       if (!drums.isPlaying) {
         drums.metro.metroTicks = 0;
@@ -97,20 +97,20 @@ function touchStarted() {
         drums.stop();
       }
     } else {
-      alert('oops, be patient as drums load...')
       console.log('oops, be patient as drums load...');
     }
 }
+
 function keyPressed(){
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
-      if(!drums.isPlaying) {
-        drums.metro.metroTicks =0;
+      if (!drums.isPlaying) {
+        drums.metro.metroTicks = 0;
         drums.loop();
-      }else{
+      } else {
         drums.stop();
       }
-    }else {
-    console.log('oops, be patient as drums load...');
+    } else {
+      console.log('oops, be patient as drums load...');
     }
 }
 
