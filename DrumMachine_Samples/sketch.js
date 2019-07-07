@@ -17,15 +17,15 @@ function setup() {
   cellWidth = width/beatLength;
   cursorPos = 0;
   
-  hh = loadSound('assets/1.mp3', () => {});
-  clap = loadSound('assets/2.mp3',()=>{});
-  bass = loadSound('assets/3.mp3',()=>{});
-  sound = loadSound('assets/4.mp3', () => { });
+  hh = loadSound('assets/4.mp3', () => {});
+  clap = loadSound('assets/3.mp3',()=>{});
+  bass = loadSound('assets/2.mp3',()=>{});
+  sound = loadSound('assets/1.mp3', () => { });
   
-  hPat = [0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1];
-  cPat = [1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0];
-  bPat = [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1];
-  dPat = [0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1];
+  hPat = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0];
+  cPat = [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0];
+  bPat = [1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0];
+  dPat = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
   sPat = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
   
   hPhrase = new p5.Phrase('hh', (time) => {
