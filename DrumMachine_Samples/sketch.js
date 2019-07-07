@@ -89,6 +89,7 @@ function mousePressed() {
 }
   
 function touchStarted() {
+  alert('touch')
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
       if (!drums.isPlaying) {
         drums.metro.metroTicks = 0;
