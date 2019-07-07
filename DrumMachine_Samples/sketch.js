@@ -12,7 +12,6 @@ let cursorPos;
 function setup() {
   cnv=createCanvas(320, 60);
   cnv.mousePressed(canvasPressed);
-  cnv.touchStarted(startDrum)
   beatLength =16;
   cellWidth = width/beatLength;
   cursorPos = 0;
@@ -115,6 +114,9 @@ function keyPressed(){
 }
 
 function canvasPressed(){
+
+ startDrum()
+
   let rowClicked = floor(4*mouseY/height);
   let indexClicked = floor(16*mouseX/width);
   if (rowClicked === 0){
