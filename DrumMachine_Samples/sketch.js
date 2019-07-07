@@ -76,9 +76,7 @@ function setup() {
 
 function mousePressed() {
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
-      alert(!drums.isPlaying)
       if (!drums.isPlaying) {
-        alert('drum')
         drums.metro.metroTicks = 0;
         drums.loop();
       } else {
@@ -153,6 +151,7 @@ function drawMatrix(){ //draw dots that represent the the pressed notes in step.
 }
 
 function sequence(time, beatIndex){
+
   if(beatIndex == 16) {
     drums.stop()
   }
