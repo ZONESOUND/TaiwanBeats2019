@@ -75,6 +75,7 @@ function setup() {
 
 
 function mousePressed() {
+  alert('mouse')
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
       alert('inside')
       if (!drums.isPlaying) {
