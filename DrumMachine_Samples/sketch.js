@@ -73,11 +73,24 @@ function setup() {
   
   drawMatrix();
 }
+
+
+function mousePressed() {
+    if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
+      if (!drums.isPlaying) {
+        drums.metro.metroTicks = 0;
+        drums.loop();
+      } else {
+        drums.stop();
+      }
+    } else {
+      console.log('oops, be patient as drums load...');
+    }
+}
   
 
 function keyPressed(){
-  if (key === " "){
-    if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded()) {
+    if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
       if(!drums.isPlaying) {
         drums.metro.metroTicks =0;
         drums.loop();
@@ -87,7 +100,6 @@ function keyPressed(){
     }else {
     console.log('oops, be patient as drums load...');
     }
-  }
 }
 
 function canvasPressed(){
