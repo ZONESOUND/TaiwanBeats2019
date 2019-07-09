@@ -9,14 +9,19 @@ let sPat;
 let cursorPos;
 let w = window.innerWidth
 let h = window.innerHeight
-
+let button
 function setup() {
   cnv=createCanvas(w, h);
   cnv.mousePressed(canvasPressed);
   beatLength =16;
   cellWidth = width/beatLength;
   cursorPos = 0;
-  
+
+  button = createButton('click me');
+  button.position(200, 200);
+  button.mousePressed(triggerBtn);
+
+
   hh = loadSound('assets/4.mp3', () => {});
   clap = loadSound('assets/3.mp3',()=>{});
   bass = loadSound('assets/2.mp3',()=>{});
