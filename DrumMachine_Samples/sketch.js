@@ -9,14 +9,19 @@ let sPat;
 let cursorPos;
 let w = window.innerWidth
 let h = window.innerHeight
-
+let button
 function setup() {
   cnv=createCanvas(w, h);
   cnv.mousePressed(canvasPressed);
   beatLength =16;
   cellWidth = width/beatLength;
   cursorPos = 0;
-  
+
+  button = createButton('click me');
+  button.position(200, 200);
+  button.mousePressed(triggerBtn);
+
+
   hh = loadSound('assets/4.mp3', () => {});
   clap = loadSound('assets/3.mp3',()=>{});
   bass = loadSound('assets/2.mp3',()=>{});
@@ -74,14 +79,18 @@ function setup() {
   drawMatrix();
 }
 
+function triggerBtn() {
+  mousePressed()
+}
+
 
 function mousePressed() {
+  console.log('mousepressed')
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
       if (!drums.isPlaying) {
         drums.metro.metroTicks = 0;
         drums.loop();
-      } else {
-        drums.stop();
+        console.log('loop')
       }
     } else {
       console.log('oops, be patient as drums load...');
@@ -90,6 +99,7 @@ function mousePressed() {
 
 
 function keyPressed(){
+    console.log('keypressed')
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
       if (!drums.isPlaying) {
         drums.metro.metroTicks = 0;
@@ -103,6 +113,7 @@ function keyPressed(){
 }
 
 function canvasPressed(){
+  return
   let rowClicked = floor(4*mouseY/height);
   let indexClicked = floor(16*mouseX/width);
   if (rowClicked === 0){
