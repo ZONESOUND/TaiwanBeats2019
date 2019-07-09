@@ -7,10 +7,11 @@ let cellWidth;
 let cnv;
 let sPat;
 let cursorPos;
-
+let w = window.innerWidth
+let h = window.innerHeight
 
 function setup() {
-  cnv=createCanvas(320, 60);
+  cnv=createCanvas(w, h);
   cnv.mousePressed(canvasPressed);
   beatLength =16;
   cellWidth = width/beatLength;
