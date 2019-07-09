@@ -79,14 +79,18 @@ function setup() {
   drawMatrix();
 }
 
+function triggerBtn() {
+  mousePressed()
+}
+
 
 function mousePressed() {
+  console.log('mousepressed')
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
       if (!drums.isPlaying) {
         drums.metro.metroTicks = 0;
         drums.loop();
-      } else {
-        drums.stop();
+        console.log('loop')
       }
     } else {
       console.log('oops, be patient as drums load...');
@@ -95,6 +99,7 @@ function mousePressed() {
 
 
 function keyPressed(){
+    console.log('keypressed')
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded() && sound.isLoaded()) {
       if (!drums.isPlaying) {
         drums.metro.metroTicks = 0;
@@ -108,6 +113,7 @@ function keyPressed(){
 }
 
 function canvasPressed(){
+  return
   let rowClicked = floor(4*mouseY/height);
   let indexClicked = floor(16*mouseX/width);
   if (rowClicked === 0){
