@@ -81,8 +81,9 @@ function repeat(time) {
 
 function sequencerUI() {
     for (var i = 0; i < 16; i++) {
-        let bw = 50
-        let bh = 10
+        let w = window.innerWidth;
+        let bw = w / 30
+        let bh = bw / 3
         let xStart = (i % 16) * bw - bw;
         let yStart = -60
 
@@ -113,9 +114,9 @@ function sequencerUI() {
 function buttonSetup() {
     let color = [0xff5151, 0xfff951, 0x51ff85, 0x51d3ff]
     for(var i = 0; i < 64; i++) {
-
-        let bw = 50
-        let bh = 50
+        let w = window.innerWidth;
+        let bw = w / 30
+        let bh = w / 30
         let xStart = (i % 16) * bw - bw;
         let yStart = Math.floor(i / 16) * bh - bh;
         buttonGraphic[i] = new Sprite(solid)
