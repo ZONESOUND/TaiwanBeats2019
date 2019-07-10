@@ -54,8 +54,9 @@ function resize() {
     let h = window.innerHeight;
 
     renderer.resize(w, h);
-    stage.x = vw / 2 - 50 * 8
-    stage.y = vh / 2 - 50 * 2
+    let bw = w / 20
+    stage.x = vw / 2 - bw * 8
+    stage.y = vh / 2 - bw * 2
 }
 
 function repeat(time) {
@@ -82,10 +83,10 @@ function repeat(time) {
 function sequencerUI() {
     for (var i = 0; i < 16; i++) {
         let w = window.innerWidth;
-        let bw = w / 30
+        let bw = w / 20
         let bh = bw / 3
-        let xStart = (i % 16) * bw - bw;
-        let yStart = -60
+        let xStart = (i % 16) * bw;
+        let yStart = -1.5*bw
 
         sequenceGraphic[i] = new Sprite(solid)
         sequenceGraphic[i].width = bw
@@ -115,9 +116,9 @@ function buttonSetup() {
     let color = [0xff5151, 0xfff951, 0x51ff85, 0x51d3ff]
     for(var i = 0; i < 64; i++) {
         let w = window.innerWidth;
-        let bw = w / 30
-        let bh = w / 30
-        let xStart = (i % 16) * bw - bw;
+        let bw = w / 20
+        let bh = w / 20
+        let xStart = (i % 16) * bw;
         let yStart = Math.floor(i / 16) * bh - bh;
         buttonGraphic[i] = new Sprite(solid)
         buttonGraphic[i].width  = bw
