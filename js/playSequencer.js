@@ -20,13 +20,19 @@ let solid = PIXI.Texture.WHITE;
 let Sprite = PIXI.Sprite;
 let control = false;
 let index = 0;
-let soundUrl = ['./sound/sequencer/S1.mp3', './sound/sequencer/S2.mp3', './sound/sequencer/S3.mp3', './sound/sequencer/S4.mp3']
-let soundArray = []
+let folder = './sound/CulTech'
+let soundUrl = [`${folder}/sasa.mp3`, `${folder}/sample1-巴拉巴拉巴拉.mp3`, `${folder}/sample2-巴拉巴拉巴拉.mp3`, `${folder}/sample3-巴拉巴拉巴拉.mp3`, `${folder}/sample4-巴拉巴拉巴拉.mp3`, `${folder}/sample5-巴拉巴拉巴拉.mp3`, `${folder}/sample6-巴拉巴拉巴拉.mp3`, `${folder}/sample7-巴拉巴拉巴拉.mp3`, `${folder}/sample8-巴拉巴拉巴拉.mp3`]
 
+let soundArray = []
+let bgSound;
+
+let size = 8
+console.log(soundUrl.length)
 function loadSound() {
-    for(var i =0; i < 4 ; i++) {
+    for(var i =0; i <= size ; i++) {
         soundArray[i] = new Tone.Player(soundUrl[i]).toMaster()
     }
+
 }
 
 window.onresize = resize;
@@ -45,7 +51,8 @@ function setup() {
 
 function soundSetup() {
     loadSound()
-    Tone.Transport.scheduleRepeat(repeat, '8n');
+    Tone.Transport.scheduleRepeat(repeat, '4n');
+    Tone.Transport.bpm.value = 76
     Tone.Transport.start();
 }
 
@@ -54,9 +61,10 @@ function resize() {
     let h = window.innerHeight;
 
     renderer.resize(w, h);
-    let bw = w / 20
-    stage.x = vw / 2 - bw * 8
-    stage.y = vh / 2 - bw * 2
+    let bw = w / (size * 5)
+    stage.x = vw / 2 - bw * (size)
+    stage.y = vh / 2 - bw * (size / 2)
+
 }
 
 function repeat(time) {
@@ -65,8 +73,11 @@ function repeat(time) {
     }
     let nowindex = index % 16
     sequenceGraphic[nowindex].alpha = 1
-    for (var i = 0; i < 4; i++) {
-        if(buttonGraphic[i * 16 + nowindex].alpha == 0.5) {
+    if (soundArray[0]) {
+        soundArray[0].start()
+    }
+    for (var i = 1; i <= size; i++) {
+        if(buttonGraphic[(i-1) * 16 + nowindex].alpha == 0.5) {
             soundArray[i].start()
             let data = {};
             data.id = i
@@ -74,16 +85,13 @@ function repeat(time) {
         }
     }
 
-
     index++
-
-
 }
 
 function sequencerUI() {
     for (var i = 0; i < 16; i++) {
         let w = window.innerWidth;
-        let bw = w / 20
+        let bw = w / (size * 5)
         let bh = bw / 3
         let xStart = (i % 16) * bw;
         let yStart = -1.5*bw
@@ -114,10 +122,10 @@ function sequencerUI() {
 
 function buttonSetup() {
     let color = [0xff5151, 0xfff951, 0x51ff85, 0x51d3ff]
-    for(var i = 0; i < 64; i++) {
+    for(var i = 0; i < size * 16; i++) {
         let w = window.innerWidth;
-        let bw = w / 20
-        let bh = w / 20
+        let bw = w / (size * 5)
+        let bh = w / (size * 5)
         let xStart = (i % 16) * bw;
         let yStart = Math.floor(i / 16) * bh - bh;
         buttonGraphic[i] = new Sprite(solid)
@@ -129,7 +137,7 @@ function buttonSetup() {
         buttonGraphic[i].position.set(xStart, yStart);
         buttonGraphic[i].id = i
 
-        let lineWidth = 3;
+        let lineWidth = 1.5;
         gtGraphic[i] = new PIXI.Graphics();
         //gt.beginFill(0x123123);
         let lineColor = 0x5a8ee2;
@@ -165,7 +173,11 @@ function buttonShine(btn) {
 }
 
 
-
+function removeAll() {
+    stage.children.forEach((s) => {
+        s.destroy()
+    })
+}
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;

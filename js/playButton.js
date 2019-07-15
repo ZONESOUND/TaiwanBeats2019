@@ -93,6 +93,7 @@ function buttonSetup() {
     }
 }
 
+
 function buttonShine(btn) {
     let t = new TimelineMax()
     t.to(btn, 0, {alpha: 1})
