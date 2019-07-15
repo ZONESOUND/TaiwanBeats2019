@@ -20,8 +20,10 @@ let solid = PIXI.Texture.WHITE;
 let Sprite = PIXI.Sprite;
 let control = false;
 let index = 0;
-let folder = './sound/CulTech'
-let soundUrl = [`${folder}/sasa.mp3`, `${folder}/sample1-巴拉巴拉巴拉.mp3`, `${folder}/sample2-巴拉巴拉巴拉.mp3`, `${folder}/sample3-巴拉巴拉巴拉.mp3`, `${folder}/sample4-巴拉巴拉巴拉.mp3`, `${folder}/sample5-巴拉巴拉巴拉.mp3`, `${folder}/sample6-巴拉巴拉巴拉.mp3`, `${folder}/sample7-巴拉巴拉巴拉.mp3`, `${folder}/sample8-巴拉巴拉巴拉.mp3`]
+let count = 0;
+let folder = './sound/CulTech/2bar_sample'
+// let soundUrl = [`${folder}/sasa.mp3`, `${folder}/sample1-巴拉巴拉巴拉.mp3`, `${folder}/sample2-巴拉巴拉巴拉.mp3`, `${folder}/sample3-巴拉巴拉巴拉.mp3`, `${folder}/sample4-巴拉巴拉巴拉.mp3`, `${folder}/sample5-巴拉巴拉巴拉.mp3`, `${folder}/sample6-巴拉巴拉巴拉.mp3`, `${folder}/sample7-巴拉巴拉巴拉.mp3`, `${folder}/sample8-巴拉巴拉巴拉.mp3`]
+let soundUrl = [`${folder}/backing.mp3`, `${folder}/2bar1-巴拉巴拉巴拉.mp3`, `${folder}/2bar2-巴拉巴拉巴拉.mp3`, `${folder}/2bar3-巴拉巴拉巴拉.mp3`, `${folder}/2bar4-巴拉巴拉巴拉.mp3`, `${folder}/2bar5-巴拉巴拉巴拉.mp3`, `${folder}/2bar6-巴拉巴拉巴拉.mp3`, `${folder}/2bar7-巴拉巴拉巴拉.mp3`, `${folder}/2bar8-巴拉巴拉巴拉.mp3`]
 
 let soundArray = []
 let bgSound;
@@ -51,7 +53,7 @@ function setup() {
 
 function soundSetup() {
     loadSound()
-    Tone.Transport.scheduleRepeat(repeat, '4n');
+    Tone.Transport.scheduleRepeat(repeat, '2n');
     Tone.Transport.bpm.value = 76
     Tone.Transport.start();
 }
@@ -68,14 +70,17 @@ function resize() {
 }
 
 function repeat(time) {
+    if(count % 2 == 0) {
+        if (soundArray[0]) {
+            soundArray[0].start()
+        }
+    }
+    count++
     if(index != 0) {
         sequenceGraphic[(index-1) % 16].alpha = 0
     }
     let nowindex = index % 16
     sequenceGraphic[nowindex].alpha = 1
-    if (soundArray[0]) {
-        soundArray[0].start()
-    }
     for (var i = 1; i <= size; i++) {
         if(buttonGraphic[(i-1) * 16 + nowindex].alpha == 0.5) {
             soundArray[i].start()
