@@ -53,7 +53,8 @@ function setup() {
 
 function soundSetup() {
     loadSound()
-    Tone.Transport.scheduleRepeat(repeat, '4n');
+    Tone.Transport.scheduleRepeat(repeat, '2n');
+    Tone.Transport.scheduleRepeat(bg, '4n');
     Tone.Transport.bpm.value = 76
     // Tone.Transport.start();
 }
@@ -69,16 +70,13 @@ function resize() {
 
 }
 
+function bg(time) {
+    if (soundArray[0]) {
+        soundArray[0].start()
+    }   
+}
+
 function repeat(time) {
-    if(count % 2 == 0) {
-        if (soundArray[0]) {
-            soundArray[0].start()
-        }
-    } else {
-        if (soundArray[0]) {
-            soundArray[0].start()
-        }
-    }
     count++
     if(index != 0) {
         sequenceGraphic[(index-1) % 16].alpha = 0
@@ -98,7 +96,6 @@ function repeat(time) {
     if(nowindex == 15) {
         Tone.Transport.stop()
     }
-    soundArray[0].start()
 }
 
 function sequencerUI() {
