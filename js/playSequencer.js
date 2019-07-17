@@ -23,7 +23,7 @@ let index = 0;
 let count = 0;
 let folder = './sound/CulTech/2bar_sample'
 // let soundUrl = [`${folder}/sasa.mp3`, `${folder}/sample1-巴拉巴拉巴拉.mp3`, `${folder}/sample2-巴拉巴拉巴拉.mp3`, `${folder}/sample3-巴拉巴拉巴拉.mp3`, `${folder}/sample4-巴拉巴拉巴拉.mp3`, `${folder}/sample5-巴拉巴拉巴拉.mp3`, `${folder}/sample6-巴拉巴拉巴拉.mp3`, `${folder}/sample7-巴拉巴拉巴拉.mp3`, `${folder}/sample8-巴拉巴拉巴拉.mp3`]
-let soundUrl = [`${folder}/backing.mp3`, `${folder}/2bar1-巴拉巴拉巴拉.mp3`, `${folder}/2bar2-巴拉巴拉巴拉.mp3`, `${folder}/2bar3-巴拉巴拉巴拉.mp3`, `${folder}/2bar4-巴拉巴拉巴拉.mp3`, `${folder}/2bar5-巴拉巴拉巴拉.mp3`, `${folder}/2bar6-巴拉巴拉巴拉.mp3`, `${folder}/2bar7-巴拉巴拉巴拉.mp3`, `${folder}/2bar8-巴拉巴拉巴拉.mp3`]
+let soundUrl = [`${folder}/sasa.mp3`, `${folder}/2bar1-巴拉巴拉巴拉.mp3`, `${folder}/2bar2-巴拉巴拉巴拉.mp3`, `${folder}/2bar3-巴拉巴拉巴拉.mp3`, `${folder}/2bar4-巴拉巴拉巴拉.mp3`, `${folder}/2bar5-巴拉巴拉巴拉.mp3`, `${folder}/2bar6-巴拉巴拉巴拉.mp3`, `${folder}/2bar7-巴拉巴拉巴拉.mp3`, `${folder}/2bar8-巴拉巴拉巴拉.mp3`]
 
 let soundArray = []
 let bgSound;
@@ -53,9 +53,9 @@ function setup() {
 
 function soundSetup() {
     loadSound()
-    Tone.Transport.scheduleRepeat(repeat, '2n');
+    Tone.Transport.scheduleRepeat(repeat, '4n');
     Tone.Transport.bpm.value = 76
-    Tone.Transport.start();
+    // Tone.Transport.start();
 }
 
 function resize() {
@@ -71,6 +71,10 @@ function resize() {
 
 function repeat(time) {
     if(count % 2 == 0) {
+        if (soundArray[0]) {
+            soundArray[0].start()
+        }
+    } else {
         if (soundArray[0]) {
             soundArray[0].start()
         }
@@ -91,6 +95,10 @@ function repeat(time) {
     }
 
     index++
+    if(nowindex == 15) {
+        Tone.Transport.stop()
+    }
+    soundArray[0].start()
 }
 
 function sequencerUI() {
@@ -127,10 +135,37 @@ function sequencerUI() {
 
 function buttonSetup() {
     let color = [0xff5151, 0xfff951, 0x51ff85, 0x51d3ff]
+    let w = window.innerWidth;
+    let bw = w / (size * 5)
+    let bh = w / (size * 5)
+    var startBtn = new Sprite(solid)
+    let xStart = -bw;
+    let yStart = - bh;
+    startBtn.width = bw
+    startBtn.height = bh;
+    startBtn.interactive = true
+    startBtn.alpha = 0
+    startBtn.position.set(xStart, yStart);
+
+    let lineWidth = 1.5;
+    let startGraphic = new PIXI.Graphics();
+    let lineColor = 0xfff951;
+    startGraphic.lineStyle(lineWidth, lineColor);
+    startGraphic.drawRect(xStart, yStart, bw - lineWidth, bh - lineWidth);
+
+    startBtn.on('pointerdown', function () {
+        buttonShine(startBtn);
+        Tone.Transport.start();
+        // if (this.alpha == 0.5) {
+        //     Tone.Transport.stop();
+        //     this.alpha = 0
+        // } else {
+        //     Tone.Transport.start();
+        //     this.alpha = 0.5
+        // }    
+    })
+
     for(var i = 0; i < size * 16; i++) {
-        let w = window.innerWidth;
-        let bw = w / (size * 5)
-        let bh = w / (size * 5)
         let xStart = (i % 16) * bw;
         let yStart = Math.floor(i / 16) * bh - bh;
         buttonGraphic[i] = new Sprite(solid)
@@ -164,11 +199,15 @@ function buttonSetup() {
             }
 
         })
-        
+
+        stage.addChild(startBtn);
+        stage.addChild(startGraphic);
         stage.addChild(buttonGraphic[i]);
         stage.addChild(gtGraphic[i]);
     }
 }
+
+
 
 function buttonShine(btn) {
     let t = new TimelineMax()

@@ -8,7 +8,7 @@
 
 - [Sequencer](https://zonesound.github.io/TaiwanBeats2019/sequencer)
 
-- [Patatap](https://lojoyu.github.io/patatapSocke)
+- [Patatap](https://lojoyu.github.io/patatapSocket)
 
   
 
