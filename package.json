@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/ZONESOUND/TaiwanBeats2019#readme",
   "dependencies": {
-    "socket.io": "2.2.0"
+    "socket.io": "2.4.0"
   }
 }
